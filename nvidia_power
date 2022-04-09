@@ -1,0 +1,5 @@
+#!/bin/bash
+nvidia-smi --persistence-mode=1
+gpupstate=$(nvidia-smi --query-gpu="pstate" --format=csv,noheader);
+gpupid=$(nvidia-smi --query-compute-apps="pid" --format=csv,noheader);
+if [ "$gpupstate" == "P0" ] && [ -z "$gpupid" ]; then fuser -kv /dev/nvidia*; fi;
