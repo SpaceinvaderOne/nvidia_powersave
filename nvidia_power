@@ -3,13 +3,11 @@
 nvidia-smi --persistence-mode=1
 #query power state
 gpu_pstate=$(nvidia-smi --query-gpu="pstate" --format=csv,noheader);
-#if pstate is zero and processes are running then kill processes
+#check if pstate is zero and no processes are running
 gpupid=$(nvidia-smi --query-compute-apps="pid" --format=csv,noheader);
 if [ "$gpu_pstate" == "P0" ] && [ -z "$gpupid" ]; then
 echo "Power state is" "$gpu_pstate"
-echo "processes running are"
-echo "$gpupstate"
-echo "Killing all gpu processes"
+echo "no processes running are"
 fuser -kv /dev/nvidia*
 else
 echo "Power state is" "$gpu_pstate"
