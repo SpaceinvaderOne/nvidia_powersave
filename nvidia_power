@@ -7,9 +7,9 @@ gpu_pstate=$(nvidia-smi --query-gpu="pstate" --format=csv,noheader);
 gpupid=$(nvidia-smi --query-compute-apps="pid" --format=csv,noheader);
 #check if pstate is zero and no processes are running by checking if any pid is in string
 if [ "$gpu_pstate" == "P0" ] && [ -z "$gpupid" ]; then
-echo "Power state is" "$gpu_pstate" # show what power state is
 echo "No pid in string so no processes are running"
 fuser -kv /dev/nvidia*
+echo "Power state is" "$gpu_pstate" # show what power state is
 else
 echo "Power state is" "$gpu_pstate" # show what power state is
 fi
